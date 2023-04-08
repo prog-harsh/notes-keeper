@@ -1,0 +1,63 @@
+import { useState } from "react";
+import "./AddNewNote.css";
+
+const AddNewNote = (props) => {
+  const [isSelected, setIsSelected] = useState(false);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+
+  const onButtonClick = () => {
+    const id = Math.random() * Date.now();
+    props.addNotes({ id: id, title: title, content: content });
+	setContent("");
+	setTitle("");
+	setIsSelected(false);
+  };
+
+  const onContentChanged = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onTitleChanged = (e) => {
+    setTitle(e.target.value);
+  };
+
+  const textareaOnSelect = (e) => {
+    setIsSelected(true);
+  };
+  return (
+    <div className="addNewNote_container">
+      {isSelected ? (
+        <div className="addNewNote_title">
+          <input
+            type="text"
+            name="title"
+            onChange={onTitleChanged}
+            placeholder="Title"
+          />
+        </div>
+      ) : null}
+      <div
+        className={
+          isSelected ? "addNewNote_content" : "addNewNote_content_false"
+        }
+      >
+        <textarea
+          name="content"
+          placeholder="Take a note..."
+		  value={content}
+          onSelect={textareaOnSelect}
+          onChange={onContentChanged}
+        />
+        {isSelected ? (
+          <div className="addNewNote_button">
+            <button onClick={() => setIsSelected(false)}>Cancel</button>
+            <button onClick={onButtonClick}>Add</button>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+};
+
+export default AddNewNote;
