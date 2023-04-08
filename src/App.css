@@ -1,8 +1,27 @@
 .row {
     display: flex;
     flex-wrap: wrap;
-    flex-wrap: wrap;
-    padding: 10px;
-    justify-content: center;
-    margin: auto;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1280px;
+}
+
+@media screen and (max-width: 1280px) {
+    .row {
+        width: 960px;
+    }
+}
+
+@media screen and (max-width: 960px) {
+    .row {
+        width: 640px;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    .row {
+        width: 100%;
+        justify-content: center;
+    }
 }
