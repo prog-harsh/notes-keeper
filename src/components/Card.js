@@ -10,6 +10,16 @@ const Card = (props) => {
         <p>{props.content}</p>
       </div>
       <div className="card_options">
+        {props.undoDelete && (
+          <img
+            src="https://cdn-icons-png.flaticon.com/64/8369/8369402.png"
+            alt="undo"
+			style={{height: "28px"}}
+            onClick={() => {
+              props.undoDelete(props.id);
+            }}
+          />
+        )}
         {props.archive && (
           <img
             src="https://cdn-icons-png.flaticon.com/64/61/61016.png"

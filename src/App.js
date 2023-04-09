@@ -50,6 +50,23 @@ const App = () => {
     // deleteNote(id);
   };
 
+  const undoDeleteHandler = (id) => {
+	const deletedNote = deletedNotes.filter((note) => {
+	  return note.id === id;
+	});
+	setDeletedNotes((prev) => {
+	  const newDeletedNotes = prev.filter((note) => {
+		return note.id !== id;
+	  });
+	  localStorage.setItem("deletedNotes", JSON.stringify(newDeletedNotes));
+	  return newDeletedNotes;
+	});
+	setNotes((prev) => {
+	  localStorage.setItem("notes", JSON.stringify([...prev, ...deletedNote]));
+	  return [...prev, ...deletedNote];
+	});
+  }
+
   const deleteNote = (id) => {
     const newNotes = notes.filter((note) => {
       return note.id !== id;
@@ -62,7 +79,6 @@ const App = () => {
         "deletedNotes",
         JSON.stringify([...prev, ...deletedNote])
       );
-      localStorage.removeItem("notes");
       localStorage.setItem("notes", JSON.stringify(newNotes));
       return [...prev, ...deletedNote];
     });
@@ -106,6 +122,7 @@ const App = () => {
                   title={note.title}
                   content={note.content}
                   delete={null}
+				  undoDelete={undoDeleteHandler}
                 />
               );
             })
