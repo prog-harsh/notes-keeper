@@ -7,6 +7,33 @@
     width: 1280px;
 }
 
+.menu_container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 15px;
+    margin-top: 10px;
+}
+
+.menu {
+    height: 40px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.452);
+    padding: 3px;
+    text-align: center;
+    outline: none;
+    font-size: 16px;
+    border: none;
+}
+
+.menu:hover {
+    background-color: #e5e9eb;
+}
+
+.menu>option {
+    background-color: #e5e9eb;
+    border: none;
+    padding: 5px;
+}
+
 @media screen and (max-width: 1280px) {
     .row {
         width: 960px;

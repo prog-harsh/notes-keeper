@@ -21,15 +21,16 @@
     word-wrap: break-word;
 }
 
-.card_delete {
+.card_options {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
-.card_delete>img {
-    height: 22px;
+.card_options>img {
+    height: 20px;
     cursor: pointer;
     margin-top: 14px;
+    margin-right: 5px;
 }
 
 @media screen and (max-width:500px) {

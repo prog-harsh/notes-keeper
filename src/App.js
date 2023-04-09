@@ -6,60 +6,132 @@ import "./App.css";
 
 const App = () => {
   const [notes, setNotes] = useState([]);
-
+  const [deletedNotes, setDeletedNotes] = useState([]);
+  const [archivedNotes, setArchivedNotes] = useState([]);
+  const [showDeletedNotes, setShowDeletedNotes] = useState(false);
+  const [showArchivedNotes, setShowArchivedNotes] = useState(false);
+  console.log("APP");
   useEffect(() => {
-    getAllNote();
+    const localNotes = JSON.parse(localStorage.getItem("notes"));
+    setNotes(localNotes ? localNotes : []);
+    const localDeletedNotes = JSON.parse(localStorage.getItem("deletedNotes"));
+    setDeletedNotes(localDeletedNotes ? localDeletedNotes : []);
+	const localArchivedNotes = JSON.parse(localStorage.getItem("archivedNotes"));
+	setArchivedNotes(localArchivedNotes ? localArchivedNotes : []);
   }, []);
 
-  const getAllNote = async () => {
-    const respose = await fetch(
-      "https://notes-81d37-default-rtdb.firebaseio.com/notes.json"
-    );
-    const json = await respose.json();
-    json && setNotes(json);
-  };
   const addNotes = (note) => {
     let oldNotes;
     setNotes((prev) => {
       oldNotes = prev;
       return [...prev, note];
     });
-    updateDatabase([...oldNotes, note]);
+    localStorage.setItem("notes", JSON.stringify([...oldNotes, note]));
   };
 
-  const updateDatabase = (notes) => {
-    fetch("https://notes-81d37-default-rtdb.firebaseio.com/notes.json", {
-      method: "PUT",
-      body: JSON.stringify(notes),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8",
-      },
+  const archiveNote = (id) => {
+    const archivedNote = notes.filter((note) => {
+      return note.id === id;
     });
+    setNotes((prev) => {
+      const newNotes = prev.filter((note) => {
+        return note.id !== id;
+      });
+      localStorage.setItem("notes", JSON.stringify(newNotes));
+      return newNotes;
+    });
+    setArchivedNotes((prev) => {
+      localStorage.setItem(
+        "archivedNotes",
+        JSON.stringify([...prev, ...archivedNote])
+      );
+      return [...prev, ...archivedNote];
+    });
+    // deleteNote(id);
   };
+
   const deleteNote = (id) => {
     const newNotes = notes.filter((note) => {
       return note.id !== id;
     });
+    const deletedNote = notes.filter((note) => {
+      return note.id === id;
+    });
+    setDeletedNotes((prev) => {
+      localStorage.setItem(
+        "deletedNotes",
+        JSON.stringify([...prev, ...deletedNote])
+      );
+      localStorage.removeItem("notes");
+      localStorage.setItem("notes", JSON.stringify(newNotes));
+      return [...prev, ...deletedNote];
+    });
     setNotes(newNotes);
-    updateDatabase(newNotes);
   };
+
+  const onSelectHandler = (e) => {
+    console.log(e.target.value);
+    if (e.target.value === "deleted") {
+      setShowDeletedNotes(true);
+      setShowArchivedNotes(false);
+    } else if (e.target.value === "archived") {
+      setShowDeletedNotes(false);
+      setShowArchivedNotes(true);
+    } else {
+      setShowDeletedNotes(false);
+      setShowArchivedNotes(false);
+    }
+  };
+
+  const showAddNewNote = !showArchivedNotes && !showDeletedNotes;
 
   return (
     <div className="App">
       <Header />
-      <AddNewNote addNotes={addNotes} />
+      <div className="menu_container">
+	  <select className="menu" name="options" id="option" onChange={onSelectHandler}>
+        <option value="notes">Notes</option>
+        <option value="deleted">Deleted notes</option>
+        <option value="archived">Archived notes</option>
+      </select>
+	  </div>
+      {showAddNewNote && <AddNewNote addNotes={addNotes} />}
       <div className="row">
-        {notes.map((note) => {
-          return (
-            <Card
-              key={note.id}
-              id={note.id}
-              title={note.title}
-              content={note.content}
-              delete={deleteNote}
-            />
-          );
-        })}
+        {showDeletedNotes
+          ? deletedNotes.map((note) => {
+              return (
+                <Card
+                  key={note.id}
+                  id={note.id}
+                  title={note.title}
+                  content={note.content}
+                  delete={null}
+                />
+              );
+            })
+          : showArchivedNotes
+          ? archivedNotes.map((note) => {
+              return (
+                <Card
+                  key={note.id}
+                  id={note.id}
+                  title={note.title}
+                  content={note.content}
+                />
+              );
+            })
+          : notes.map((note) => {
+              return (
+                <Card
+                  key={note.id}
+                  id={note.id}
+                  title={note.title}
+                  archive={archiveNote}
+                  content={note.content}
+                  delete={deleteNote}
+                />
+              );
+            })}
       </div>
     </div>
   );
