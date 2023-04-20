@@ -28,6 +28,7 @@
     resize: none;
     overflow: hidden;
     height: 180px;
+    word-spacing: -3px;
 }
 
 .addNewNote_content_false>textarea {
