@@ -7,7 +7,7 @@ const Card = (props) => {
         <p>{props.title.trim() !== "" ? props.title : "(None)"}</p>
       </div>
       <div className="card_content">
-        <p>{props.content}</p>
+        <pre>{props.content}</pre>
       </div>
       <div className="card_options">
         {props.undoDelete && (
