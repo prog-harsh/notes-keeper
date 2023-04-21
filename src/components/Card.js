@@ -1,6 +1,23 @@
 import "./Card.css";
+import { useDispatch } from "react-redux";
+import { todoActions } from "../store";
 
 const Card = (props) => {
+  const dispatch = useDispatch();
+
+  const archiveNoteHandler = (id) => {
+    dispatch(todoActions.archiveTodos(id));
+    // deleteNote(id);
+  };
+
+  const undoDeleteHandlerHandler = (id) => {
+    dispatch(todoActions.undoDeleteTodos(id));
+  };
+
+  const deleteNoteHandler = (id) => {
+    dispatch(todoActions.deleteTodos(id));
+  };
+
   return (
     <div className="card">
       <div className="card_title">
@@ -14,9 +31,9 @@ const Card = (props) => {
           <img
             src="https://cdn-icons-png.flaticon.com/64/8369/8369402.png"
             alt="undo"
-			style={{height: "28px"}}
+            style={{ height: "28px" }}
             onClick={() => {
-              props.undoDelete(props.id);
+              undoDeleteHandlerHandler(props.id);
             }}
           />
         )}
@@ -25,7 +42,7 @@ const Card = (props) => {
             src="https://cdn-icons-png.flaticon.com/64/61/61016.png"
             alt="archive"
             onClick={() => {
-              props.archive(props.id);
+              archiveNoteHandler(props.id);
             }}
           />
         )}
@@ -34,7 +51,7 @@ const Card = (props) => {
             src="https://cdn-icons-png.flaticon.com/32/6861/6861362.png"
             alt="delete"
             onClick={() => {
-              props.delete(props.id);
+              deleteNoteHandler(props.id);
             }}
           />
         )}
