@@ -1,4 +1,6 @@
 import "./Card.css";
+import { MdArchive } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../store";
 
@@ -37,19 +39,20 @@ const Card = (props) => {
             }}
           />
         )}
+
         {props.archive && (
-          <img
-            src="https://cdn-icons-png.flaticon.com/64/61/61016.png"
-            alt="archive"
+          <MdArchive
+            className="icons"
+            fontSize={26}
             onClick={() => {
               archiveNoteHandler(props.id);
             }}
           />
         )}
         {props.delete && (
-          <img
-            src="https://cdn-icons-png.flaticon.com/32/6861/6861362.png"
-            alt="delete"
+          <MdDelete
+            className="icons"
+            fontSize={26}
             onClick={() => {
               deleteNoteHandler(props.id);
             }}

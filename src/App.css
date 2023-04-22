@@ -1,3 +1,9 @@
+.dark {
+    background-color: #100F0F;
+    color: white;
+    min-height: 100vh;
+}
+
 .row {
     display: flex;
     flex-wrap: wrap;
@@ -22,16 +28,29 @@
     outline: none;
     font-size: 16px;
     border: none;
+    cursor: pointer;
+}
+
+.dark .menu {
+    background-color: #1B1A17;
+    color: white;
 }
 
 .menu:hover {
     background-color: #e5e9eb;
 }
 
+.dark .menu:hover {
+    background-color: #1B1A17;
+}
+
 .menu>option {
     background-color: #e5e9eb;
     border: none;
-    padding: 5px;
+}
+
+.dark .menu>option {
+    background-color: #1B1A17;
 }
 
 @media screen and (max-width: 1280px) {

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import themeSlice from "./theme-slice";
 import { configureStore } from "@reduxjs/toolkit";
 
 const todoSlice = createSlice({
@@ -85,7 +86,10 @@ const todoSlice = createSlice({
 export const todoActions = todoSlice.actions;
 
 const store = configureStore({
-  reducer: todoSlice.reducer,
+  reducer: {
+	todo: todoSlice.reducer,
+	theme: themeSlice.reducer
+  },
 });
 
 export default store;

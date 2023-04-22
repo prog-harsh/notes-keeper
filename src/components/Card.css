@@ -9,6 +9,12 @@
     padding: 10px;
 }
 
+.dark .card {
+    background: #1B1A17;
+    color: white;
+    box-shadow: 0 0 5px 1px #000000;
+}
+
 .card_title {
     font-size: 24px;
     height: 6vh;
@@ -29,11 +35,9 @@
     justify-content: flex-end;
 }
 
-.card_options>img {
-    height: 20px;
+.card_options .icons {
     cursor: pointer;
-    margin-top: 14px;
-    margin-right: 5px;
+    margin-top: 10px;
 }
 
 @media screen and (max-width: 500px) {

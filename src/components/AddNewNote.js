@@ -26,6 +26,11 @@ const AddNewNote = () => {
     setTitle(e.target.value);
   };
 
+  const onCancelClick = () => {
+	setIsSelected(false);
+	setContent("");
+  }
+
   const textareaOnSelect = (e) => {
     setIsSelected(true);
   };
@@ -55,7 +60,7 @@ const AddNewNote = () => {
         />
         {isSelected ? (
           <div className="addNewNote_button">
-            <button onClick={() => setIsSelected(false)}>Cancel</button>
+            <button onClick={onCancelClick}>Cancel</button>
             <button onClick={onButtonClick}>Add</button>
           </div>
         ) : null}
