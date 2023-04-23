@@ -1,6 +1,8 @@
 import "./Card.css";
-import { MdArchive } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
+import { MdOutlineArchive } from "react-icons/md";
+import { MdOutlineDelete } from "react-icons/md";
+import { MdOutlineRestoreFromTrash } from "react-icons/md";
+import { MdOutlineDeleteForever } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../store";
 
@@ -16,6 +18,10 @@ const Card = (props) => {
     dispatch(todoActions.undoDeleteTodos(id));
   };
 
+  const deleteForeverHandler = (id) => {
+    dispatch(todoActions.deleteForever(id));
+  };
+
   const deleteNoteHandler = (id) => {
     dispatch(todoActions.deleteTodos(id));
   };
@@ -29,7 +35,7 @@ const Card = (props) => {
         <pre>{props.content}</pre>
       </div>
       <div className="card_options">
-        {props.undoDelete && (
+        {/* { (
           <img
             src="https://cdn-icons-png.flaticon.com/64/8369/8369402.png"
             alt="undo"
@@ -38,10 +44,31 @@ const Card = (props) => {
               undoDeleteHandlerHandler(props.id);
             }}
           />
+        )} */}
+
+        {props.undoDelete && (
+          <MdOutlineDeleteForever
+            className="icons"
+            fill="red"
+            fontSize={26}
+            onClick={() => {
+              deleteForeverHandler(props.id);
+            }}
+          />
+        )}
+
+        {props.undoDelete && (
+          <MdOutlineRestoreFromTrash
+            className="icons"
+            fontSize={26}
+            onClick={() => {
+              undoDeleteHandlerHandler(props.id);
+            }}
+          />
         )}
 
         {props.archive && (
-          <MdArchive
+          <MdOutlineArchive
             className="icons"
             fontSize={26}
             onClick={() => {
@@ -50,9 +77,10 @@ const Card = (props) => {
           />
         )}
         {props.delete && (
-          <MdDelete
+          <MdOutlineDelete
             className="icons"
             fontSize={26}
+            fill="red"
             onClick={() => {
               deleteNoteHandler(props.id);
             }}

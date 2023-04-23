@@ -30,6 +30,12 @@ const todoSlice = createSlice({
       localStorage.setItem("todos", JSON.stringify(state.todos));
       localStorage.setItem("deletedTodos", JSON.stringify(state.deletedTodos));
     },
+    deleteForever(state, action) {
+      state.deletedTodos = state.deletedTodos.filter(
+        (todo) => todo.id !== action.payload
+      );
+	  localStorage.setItem("deletedTodos",JSON.stringify(state.deletedTodos))
+    },
     undoDeleteTodos(state, action) {
       const deletedTodo = state.deletedTodos.filter((todo) => {
         return todo.id === action.payload;
@@ -87,8 +93,8 @@ export const todoActions = todoSlice.actions;
 
 const store = configureStore({
   reducer: {
-	todo: todoSlice.reducer,
-	theme: themeSlice.reducer
+    todo: todoSlice.reducer,
+    theme: themeSlice.reducer,
   },
 });
 
