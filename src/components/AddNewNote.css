@@ -1,5 +1,5 @@
 .addNewNote_container {
-    width: 50%;
+    width: 30%;
     display: flex;
     flex-direction: column;
     margin-top: 30px;
@@ -7,7 +7,7 @@
     margin-right: auto;
     border-radius: 5px;
     /* padding: 18px; */
-    box-shadow: 0px 0px 6px rgb(113, 110, 110);
+    box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.201);
 }
 
 .dark .addNewNote_container {
@@ -34,7 +34,8 @@
     font-size: 18px;
     resize: none;
     overflow: hidden;
-    height: 180px;
+    /* height: 180px; */
+    min-height: 10vh;
     word-spacing: -3px;
 }
 
@@ -68,8 +69,14 @@
     border: none;
 }
 
+@media screen and (max-width: 960px) {
+    .addNewNote_container {
+        width: 50%;
+    }
+}
+
 @media screen and (max-width: 500px) {
     .addNewNote_container {
-        width: 90%;
+        width: 85%;
     }
 }
